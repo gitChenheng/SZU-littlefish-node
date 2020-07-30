@@ -11,6 +11,3 @@ export const createRedisIns = () => {
 export const getRedisIns = () => {
     return redisInstance;
 }
-
-// const newRedis = new Redis(config.redis);
-// export default newRedis;

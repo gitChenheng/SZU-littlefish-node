@@ -15,7 +15,6 @@ export default class User extends Model<User>{
     @Column(STRING)
     public openid: string;
 
-    @AllowNull
     @Column(STRING)
     public name: string;
 
@@ -28,19 +27,23 @@ export default class User extends Model<User>{
     public phone: string;
 
     @AllowNull
+    @Column({type: TINYINT, field: "parent_auth"})// 0无权限 2等待审核 1有权限
+    public parentAuth: number;
+
+    @AllowNull
     @Column(BOOLEAN)
     public gender: boolean;
 
     @AllowNull
-    @Column(STRING)
+    @Column({type: STRING, field: "study_num"})
     public studyNum: string;
 
     @AllowNull
-    @Column(STRING)
+    @Column({type: STRING, field: "teach_card_num"})
     public teachCardNum: string;
 
     @AllowNull
-    @Column(STRING(30))
+    @Column(STRING(30))//年级
     public grade: string;
 
     @AllowNull
@@ -56,7 +59,7 @@ export default class User extends Model<User>{
     public clbum: string;
 
     @AllowNull
-    @Column(TEXT)
+    @Column({type: TEXT, field: "avatar_url"})
     public avatarUrl: string;
 
     @AllowNull

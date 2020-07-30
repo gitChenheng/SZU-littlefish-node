@@ -24,8 +24,8 @@ export class UserController{
                 //     return ;
                 // }
                 const userItem = {
-                    openid,
                     ...body,
+                    openid,
                     name: utf16toEntities(nickName),
                     credit: 0,
                     balance: 0,
