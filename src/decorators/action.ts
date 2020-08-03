@@ -1,7 +1,11 @@
 import {CTRL, GET, POST} from "@/constans/decorator";
 
+export const verbDescriptors = {
+    type: "type",
+}
+
 export function Ctrl(target) {
-    target.type = CTRL;
+    target[verbDescriptors.type] = CTRL;
 }
 
 export function Get(target, descriptor) {

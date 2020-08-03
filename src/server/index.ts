@@ -14,7 +14,7 @@ import {restIfy} from "@/middlewares/intercepter/rest";
 import koaBody from "koa-body";
 import serve from "koa-static";
 import https from "https";
-import routeHandler from "../middlewares/routeHandler";
+import router from "../middlewares/routeHandler";
 import {createDbContext} from "@/db/db_context";
 import {createRedisIns} from "@/server/redis";
 import helmet from "koa-helmet";
@@ -40,7 +40,7 @@ app.use(koaBody({
 }));
 app.use(bodyParser());
 app.use(restIfy());
-app.use(routeHandler());
+app.use(router.routes()).use(router.allowedMethods());
 
 if (process.env.NODE_ENV === ENV_PROD){
     const options = {

@@ -1,17 +1,21 @@
-import {updateOrCreateUser, getUid, getUserById, changeUserInfoById} from "@/services/userSer";
+import {findOrCreateUser, getUid, getUserById, changeUserInfoById, getUserByPhone} from "@/services/userSer";
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {js_code2_session} from "@/services/common/wx";
 import {utf16toEntities} from "@/utils/util";
+import {Context} from "koa";
+import {findBaseUserInCondition} from "@/services/baseDataSer";
+import {getAllChildren} from "@/services/parentStudentSer";
+import {getTranscriptsById} from "@/services/transcriptSer";
 
 @Ctrl
-export class UserController{
+export default class UserController{
 
     @Api
     @Post
-    public async login(ctx) {
+    public static async login(ctx: Context) {
         const body = ctx.request.body;
-        const {code, shareid, nickName} = body;
+        const {code, nickName} = body;
         try {
             const jscode2session = await js_code2_session(code);
             if (jscode2session.errcode){
@@ -26,14 +30,10 @@ export class UserController{
                 const userItem = {
                     ...body,
                     openid,
-                    name: utf16toEntities(nickName),
-                    credit: 0,
-                    balance: 0,
-                    role: 0,
+                    nickName: utf16toEntities(nickName),
                 };
                 delete userItem.code;
-                delete userItem.nickName;
-                const token = await updateOrCreateUser(openid, shareid, userItem);
+                const token = await findOrCreateUser(openid, userItem);
                 if (token)
                     ctx.rest(JSONResult.ok({token}, "登录成功"));
             }
@@ -44,7 +44,7 @@ export class UserController{
 
     @Api
     @Post
-    public async getUserInfo(ctx) {
+    public static async getUserInfo(ctx: Context) {
         try {
             const uid = await getUid(ctx);
             if (!uid){
@@ -54,7 +54,7 @@ export class UserController{
                 if (res){
                     ctx.rest(JSONResult.ok(res))
                 }else{
-                    ctx.rest(JSONResult.err("未找到用户信息"))
+                    ctx.rest(JSONResult.authority("未找到用户信息"))
                 }
             }
         }catch (e) {
@@ -64,7 +64,7 @@ export class UserController{
 
     @Api
     @Post
-    public async completeUserInfo(ctx) {
+    public static async completeUserInfo(ctx: Context) {
         const body = ctx.request.body;
         const {role, phone, validCode, name, teachCardNum, studyNum} = body;
         if (!role || !phone || !validCode || !name){
@@ -79,10 +79,30 @@ export class UserController{
             return ;
         }
         try {
+            let params: any = {};
+            if (role === 1){
+                params = {
+                    studyNum,
+                }
+            } else if (role === 2){
+                params = {
+                    teachCardNum,
+                }
+            }
+            const baseUserRes = await findBaseUserInCondition({
+                ...params,
+                role,
+                name,
+                phone,
+            });
+            if (!baseUserRes){
+                ctx.rest(JSONResult.err("信息不匹配"));
+                return ;
+            }
             const uid = await getUid(ctx);
             if (uid){
-                const res = await changeUserInfoById(body, uid);
-                console.log('res',res)
+                delete baseUserRes.id;
+                const res = await changeUserInfoById(baseUserRes, uid);
                 if (res)
                     ctx.rest(JSONResult.ok())
             } else{
@@ -93,11 +113,43 @@ export class UserController{
         }
     }
 
+    @Api
+    @Post
+    public static async getChildrenInfo(ctx: Context) {
+        try {
+            const uid = await getUid(ctx);
+            if (!uid){
+                ctx.rest(JSONResult.authority())
+            }else{
+                const userInfo = await getUserById(uid);
+                if (userInfo.role !== 3) {
+                    ctx.rest(JSONResult.err("角色身份错误"));
+                    return ;
+                }
+                const phone = userInfo.phone;
+                const res = await getAllChildren(phone);
+                const allChildren = [];
+                if (res.length){
+                    for (const o of res){
+                        const childInfo = await getUserByPhone(o.studentPhone);
+                        const transcripts = await getTranscriptsById(childInfo.id);
+                        allChildren.push({
+                            ...childInfo,
+                            transcripts
+                        })
+                    }
+                }
+                ctx.rest(JSONResult.ok(allChildren))
+            }
+        }catch (e) {
+            throw e;
+        }
+    }
 
     // @View
-    // public async login(ctx){
+    // public static async loginView(ctx: Context){
     //     ctx.types = "text/html;charset=utf-8";
-    //     ctx.response.body = `<form action="/api/user/signIn" method="post">
+    //     ctx.body = `<form action="/api/user/signIn" method="post">
     //         <p>Name: <input name="name" value=""></p>
     //         <p>pwd: <input name="pwd" types="text"></p>
     //         <p><input types="submit" value="Submit"></p>

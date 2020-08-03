@@ -1,7 +1,9 @@
-import {findAllUsers, createUser, getByName, getByOpenid, updateUserInCondition, getById, updateUser} from "@/dao/userDao";
+import {
+    findAllUsers, createUser, getByName, getByOpenid,
+    updateUserInCondition, getById, updateUser, getInCondition
+} from "@/dao/userDao";
 import {_compare, _hash} from "@/utils/hash";
 import {sign} from "@/middlewares/jwt";
-import Sequelize from "sequelize";
 import {setRedisData, getRedisData} from "@/services/common/redisSer";
 import {JWT_SECRET} from "@/constans/global";
 import jwt from "jsonwebtoken";
@@ -38,6 +40,14 @@ export const getUid = async (ctx) => {
 
 export const getUserById = async (uid: string) => {
     return await getById(uid);
+}
+
+export const getUserByPhone = async (phone: string) => {
+    return await getInCondition({phone})
+}
+
+export const getUserByStudyNum = async (studyNum: string) => {
+    return await getInCondition({studyNum});
 }
 
 export const changeUserInfoById = async (item, id) => {
@@ -84,18 +94,10 @@ export const addUser = async (obj: any) => {
     });
 }
 
-export const updateOrCreateUser = async (openid, shareid, obj) => {
+export const findOrCreateUser = async (openid, obj) => {
     let user = await getByOpenid(openid);
     if (!user) {
-        if (shareid){
-            user = await addUser(obj);
-            await changeUserInfo(
-                {credit: Sequelize.literal(`'credit'+100`)},
-                {id: shareid}
-            );
-        }else{
-            user = await addUser(obj);
-        }
+        user = await addUser(obj);
     }
     return await createToken(user.id);
 }

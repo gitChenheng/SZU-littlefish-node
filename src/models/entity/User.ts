@@ -1,5 +1,5 @@
-import {Model, Table, Column, PrimaryKey, AllowNull} from "sequelize-typescript";
-import { STRING, DATE, INTEGER, TINYINT, BIGINT, TEXT, BOOLEAN, DECIMAL } from "sequelize";
+import {Model, Table, Column, PrimaryKey, AllowNull, Unique} from "sequelize-typescript";
+import { STRING, TINYINT, TEXT, BOOLEAN } from "sequelize";
 
 @Table({tableName: "user"})
 export default class User extends Model<User>{
@@ -8,27 +8,27 @@ export default class User extends Model<User>{
     @Column(STRING)
     public id: string;
 
-    @Column(TINYINT)//1学生 2教师 3家长 10管理员
-    public role: number;
-
-    @AllowNull
+    @Unique
     @Column(STRING)
     public openid: string;
 
-    @Column(STRING)
-    public name: string;
+    @Column({type: STRING, field: "nick_name"})
+    public nickName: string;
 
     @AllowNull
     @Column(STRING)
     public pwd: string;
 
+    @Column(TINYINT)//1学生 2教师 3家长 10管理员
+    public role: number;
+
+    @Column(STRING)
+    public name: string;
+
+    @Unique
     @AllowNull
     @Column(STRING(20))
     public phone: string;
-
-    @AllowNull
-    @Column({type: TINYINT, field: "parent_auth"})// 0无权限 2等待审核 1有权限
-    public parentAuth: number;
 
     @AllowNull
     @Column(BOOLEAN)

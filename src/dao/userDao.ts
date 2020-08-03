@@ -9,6 +9,13 @@ export const getById = async (id) => {
     });
 }
 
+export const getInCondition = async (condition) => {
+    return await User.findOne({
+        raw: true,
+        where: condition
+    });
+}
+
 export const getByOpenid = async (openid) => {
     return await User.findOne({
         raw: true,
@@ -57,7 +64,6 @@ export const findAllUsers = async () => {
 }
 
 export const updateUser = async (item, id) => {
-    console.log(item, id)
     return await User.update(
         item,
         {where: {id}}

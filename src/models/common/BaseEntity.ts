@@ -1,8 +1,9 @@
 import {Model, Table, Column, PrimaryKey, AutoIncrement} from "sequelize-typescript";
-import { STRING, INTEGER, DATE, TINYINT, BIGINT, TEXT } from "sequelize";
+import {INTEGER} from "sequelize";
 
 @Table({tableName: "base_table"})
 export default class BaseEntity extends Model<BaseEntity>{
+
     @PrimaryKey
     @AutoIncrement
     @Column(INTEGER)
