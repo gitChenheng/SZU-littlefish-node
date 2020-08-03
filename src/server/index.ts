@@ -15,7 +15,7 @@ import koaBody from "koa-body";
 import serve from "koa-static";
 import https from "https";
 import router from "../middlewares/routeHandler";
-import {createDbContext} from "@/db/db_context";
+import {createDbContext} from "@/server/db/db_context";
 import {createRedisIns} from "@/server/redis";
 import helmet from "koa-helmet";
 import {httpLogger} from "@/utils/logUtil/logger";

@@ -1,4 +1,4 @@
-import {bulkCreateParentStudent, getChildrenByParent} from "@/dao/parentStudentDao";
+import {bulkCreateParentStudent, getChildrenByParent} from "@/services/dao/parentStudentDao";
 
 interface IParentStudent {
     parentId?: string;

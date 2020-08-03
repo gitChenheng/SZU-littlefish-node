@@ -1,7 +1,7 @@
 import {
     findAllUsers, createUser, getByName, getByOpenid,
     updateUserInCondition, getById, updateUser, getInCondition
-} from "@/dao/userDao";
+} from "@/services/dao/userDao";
 import {_compare, _hash} from "@/utils/hash";
 import {sign} from "@/middlewares/jwt";
 import {setRedisData, getRedisData} from "@/services/common/redisSer";

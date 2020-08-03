@@ -1,6 +1,6 @@
 import User from "@/models/entity/User";
 import {generateId} from "@/utils/util";
-import {dbCtx} from "@/db/db_context";
+import {dbCtx} from "@/server/db/db_context";
 
 export const getById = async (id) => {
     return await User.findOne({

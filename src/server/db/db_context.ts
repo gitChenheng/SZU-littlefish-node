@@ -1,5 +1,5 @@
 import "module-alias/register";
-import config from "../config/config";
+import config from "@/config/config";
 import path from "path";
 import {Sequelize} from "sequelize-typescript";
 import {info} from "@/utils/logUtil/log4";

@@ -1,5 +1,5 @@
 import {IStudent} from "@/models/interface/user";
-import {bulkCreateBaseUsers, findOneInCondition} from "@/dao/baseDataDao";
+import {bulkCreateBaseUsers, findOneInCondition} from "@/services/dao/baseDataDao";
 import {IBaseUser} from "@/models/interface/baseUser";
 
 export const addBulkBaseStudents = async (records: IStudent[]) => {

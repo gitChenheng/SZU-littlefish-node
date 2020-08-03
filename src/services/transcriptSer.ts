@@ -1,4 +1,4 @@
-import {bulkCreateBaseTranscript, getAllById} from "@/dao/transcriptDao";
+import {bulkCreateBaseTranscript, getAllById} from "@/services/dao/transcriptDao";
 
 export const addBulkTranscripts = async (records) => {
     return await bulkCreateBaseTranscript(records);

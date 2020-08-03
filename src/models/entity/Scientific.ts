@@ -17,4 +17,5 @@ export default class Scientific extends BaseEntity{
 
     @Column({type: TEXT, field: "pdf_url"})
     public pdfUrl: string;
+
 }
