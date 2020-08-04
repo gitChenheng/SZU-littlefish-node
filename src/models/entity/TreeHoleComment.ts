@@ -9,6 +9,9 @@ export default class TreeHoleComment extends BaseEntity{
     @Column({type: INTEGER, field: "tree_hole_id"})
     public treeHoleId: number;
 
+    @Column(STRING)
+    public uid: string;
+
     @AllowNull
     @Column(INTEGER)
     public pid: number;

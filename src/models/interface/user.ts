@@ -9,6 +9,17 @@ export interface IStudent {
     clbum: string;
 }
 
+export interface ITeacher {
+    role: number;
+    name: string;
+    phone: string;
+    teachCardNum: string;
+    grade?: string;
+    faculty?: string;
+    major?: string;
+    clbum?: string;
+}
+
 export interface IParent {
     id?: string;
 }

@@ -1,11 +1,11 @@
-import redis from "../../server/redis";
+import {getRedisIns} from "@/server/redis";
 import jwt from "jsonwebtoken";
 import JSONResult from "@/utils/JSONResult";
 const jwt_secret = "1eaf3h45467gvf_sf23";
 
-export const getUid = async (ctx, next) => {
+export const getUid = async (ctx) => {
     const token = ctx.request.header.token;
-    const redisResult = await redis.get(token);
+    const redisResult = await getRedisIns().get(token);
     if (redisResult){
         return JSON.parse(redisResult).uid
     }else{
@@ -25,5 +25,4 @@ export const getRole = async (ctx, next) => {
     // return user.role
 }
 export default {
-    getUid, getRole
 };

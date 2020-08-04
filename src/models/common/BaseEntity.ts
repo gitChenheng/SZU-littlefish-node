@@ -17,6 +17,7 @@ export default class BaseEntity extends Model<BaseEntity>{
 
     static async deleteById<T extends BaseEntity>(id: number){
         return await this.destroy({
+            // force: true, //硬删
             where: {id}
         });
     }

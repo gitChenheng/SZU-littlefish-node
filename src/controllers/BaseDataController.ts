@@ -1,4 +1,4 @@
-import {addBulkBaseStudents, addBulkBaseParents} from "@/services/baseDataSer";
+import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers} from "@/services/baseDataSer";
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
@@ -16,6 +16,22 @@ export default class BaseDataController{
         console.log(body)
         try {
             const res = await addBulkBaseStudents(body);
+            if (res)
+                ctx.rest(JSONResult.ok("导入成功"));
+            else
+                ctx.rest(JSONResult.err("导入失败"))
+        }catch (e) {
+            throw e;
+        }
+    }
+
+    @Api
+    @Post
+    public static async exportBaseTeachers(ctx: Context){
+        const body = ctx.request.body;
+        console.log(body)
+        try {
+            const res = await addBulkBaseTeachers(body);
             if (res)
                 ctx.rest(JSONResult.ok("导入成功"));
             else
@@ -48,7 +64,7 @@ export default class BaseDataController{
         try {
             console.log(body)
             const psRes = await bulkCreatePS(body);
-            console.log('psRes',psRes)
+            console.log("psRes", psRes)
             if (psRes)
                 ctx.rest(JSONResult.ok("导入成功"))
             else
@@ -73,7 +89,7 @@ export default class BaseDataController{
             }
             console.log(transcripts)
             const psRes = await addBulkTranscripts(transcripts);
-            console.log('psRes',psRes)
+            console.log("psRes", psRes)
             if (psRes)
                 ctx.rest(JSONResult.ok("导入成功"))
             else

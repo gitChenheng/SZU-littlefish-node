@@ -30,7 +30,7 @@ export const get_access_token = async () => {
         return JSON.parse(cache_access_token);
     }else{
         const at = await this.at_server();
-        set(ACCESS_TOKEN, JSON.stringify(at),1200);
+        set(ACCESS_TOKEN, JSON.stringify(at), 1200);
         return at;
     }
 }
