@@ -1,3 +1,3 @@
-export const APP_ID = "wxf8bf8788bcf278fe";
-export const APP_SECRET = "12323ffbc36e112c5ea847fc76bb5d54";
+export const APP_ID = "wx65f55094271bb55e";
+export const APP_SECRET = "2f4d78ce2517ddd74ba2f36045088316";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";

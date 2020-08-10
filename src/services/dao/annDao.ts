@@ -3,9 +3,11 @@ import Competition from "@/models/entity/Competition";
 import RecruitAnnounce from "@/models/entity/RecruitAnnounce";
 import Together from "@/models/entity/Together";
 import {dbCtx} from "@/server/db/db_context";
+import {CommonExcludeAttributes} from "@/constans/global";
 
 export const getAllScientific = async () => {
     return await Scientific.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
     });
 }
@@ -27,6 +29,7 @@ export const getAllCompetitions = async (type) => {
 
 export const getAllRecruits = async () => {
     return await RecruitAnnounce.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
     });
 }
@@ -55,5 +58,8 @@ export const updateTogether = async (obj, id) => {
 }
 
 export const findAllTogether = async () => {
-    return await Together.findAll({raw: true});
+    return await Together.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true
+    });
 }

@@ -1,13 +1,41 @@
-import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers} from "@/services/baseDataSer";
+import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers, findBaseUsersInCondition} from "@/services/baseDataSer";
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
 import {bulkCreatePS} from "@/services/parentStudentSer";
 import {addBulkTranscripts} from "@/services/transcriptSer";
 import {getUserByStudyNum} from "@/services/userSer";
+import {upload} from "@/services/common/upload";
 
 @Ctrl
 export default class BaseDataController{
+
+    @Api
+    @Post
+    public static async uploadFile(ctx: Context){
+        try {
+            const filePath = await upload(ctx);
+            if (filePath)
+                ctx.rest(JSONResult.ok(filePath));
+        }catch (e) {
+            throw e
+        }
+    }
+
+    @Api
+    @Get
+    public static async getBaseStudents(ctx: Context){
+        const params = ctx.request.query;
+        try {
+            const res = await findBaseUsersInCondition(params);
+            if (res)
+                ctx.rest(JSONResult.ok(res));
+            else
+                ctx.rest(JSONResult.err())
+        }catch (e) {
+            throw e;
+        }
+    }
 
     @Api
     @Post

@@ -1,9 +1,11 @@
 import User from "@/models/entity/User";
 import {generateId} from "@/utils/util";
 import {dbCtx} from "@/server/db/db_context";
+import {CommonExcludeAttributes} from "@/constans/global";
 
 export const getById = async (id) => {
     return await User.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: {id}
     });
@@ -11,6 +13,7 @@ export const getById = async (id) => {
 
 export const getInCondition = async (condition) => {
     return await User.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: condition
     });
@@ -18,6 +21,7 @@ export const getInCondition = async (condition) => {
 
 export const getByOpenid = async (openid) => {
     return await User.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: {openid}
     });
@@ -34,6 +38,7 @@ export const getByOpenid = async (openid) => {
 
 export const getByName = async (name) => {
     return await User.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: {name}
     });
@@ -41,6 +46,7 @@ export const getByName = async (name) => {
 
 export const getByCondition = async (obj) => {
     return await User.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: obj
     });
@@ -60,7 +66,10 @@ export const getByCondition = async (obj) => {
 // }
 
 export const findAllUsers = async () => {
-    return await User.findAll();
+    return await User.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true,
+    });
 }
 
 export const updateUser = async (item, id) => {

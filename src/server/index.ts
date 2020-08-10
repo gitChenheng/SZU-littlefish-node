@@ -36,7 +36,7 @@ app.use(httpLogger());
 app.use(verify());
 app.use(koaBody({
     multipart: true,
-    formidable: {maxFileSize: 100 * 1024 * 1024}
+    formidable: {maxFileSize: 200 * 1024 * 1024}
 }));
 app.use(bodyParser());
 app.use(restIfy());

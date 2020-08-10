@@ -1,4 +1,5 @@
 import ParentStudent from "@/models/entity/ParentStudent";
+import {CommonExcludeAttributes} from "@/constans/global";
 
 export const bulkCreateParentStudent = async (records: any[]) => {
     const res = await ParentStudent.bulkCreate(records);
@@ -7,6 +8,7 @@ export const bulkCreateParentStudent = async (records: any[]) => {
 
 export const getChildrenByParent = async (phone) => {
     return await ParentStudent.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
         where: {phone}
     })

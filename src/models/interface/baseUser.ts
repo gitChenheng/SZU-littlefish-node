@@ -6,3 +6,6 @@ export interface IBaseUser {
     teachCardNum?: string,
 }
 
+export interface IRole {
+    role: number,
+}

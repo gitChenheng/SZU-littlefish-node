@@ -17,7 +17,8 @@ const initRoute = () => {
             .then(m => {
                 const o = m.default;
                 const _descriptor = Object.getOwnPropertyDescriptors(o);
-                const _name = String(f).split(Controller)[0].toLowerCase();
+                let _name = String(f).split(Controller)[0];
+                _name = _name.replace(_name[0], _name[0].toLowerCase());
                 if (_descriptor.type && _descriptor.type.value === CTRL){
                     for (const funcName of Object.keys(_descriptor)){
                         if (baseDescriptors.includes(funcName)){
