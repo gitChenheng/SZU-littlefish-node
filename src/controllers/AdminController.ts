@@ -1,7 +1,8 @@
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
-import {createToken, getUid} from "@/services/userSer";
+import {createToken} from "@/services/userSer";
+import {_hash, _compare} from "@/utils/hash";
 
 @Ctrl
 export default class AdminController{
@@ -9,28 +10,36 @@ export default class AdminController{
     @Api
     @Post
     public static async testToken(ctx: Context){
-        // const uid = await getUid(ctx);
         ctx.rest(JSONResult.ok());
-        // if (uid)
-        //     ctx.rest(JSONResult.ok());
-        // else{
-        //     ctx.status = 400;
-        //     ctx.rest({
-        //         msg: "身份认证失败"
-        //     })
-        // }
     }
+
+    // @Api
+    // @Post
+    // public static async register(ctx: Context){
+    //     const hashPwd = await _hash(String("szu@123"));
+    //     console.log(hashPwd)
+    // }
 
     @Api
     @Post
     public static async login(ctx: Context){
-        const body = ctx.request.body;
-        console.log(body);
-        if (body.name === "admin" && body.pwd === "1234"){
-            const token = await createToken("admin");
-            ctx.rest(JSONResult.ok({token}));
-        }else{
-            ctx.rest(JSONResult.err("账号密码错误"));
+        try {
+            const body = ctx.request.body;
+            console.log(body);
+            if (!body.name || !body.pwd || (body.name !== "admin")){
+                ctx.rest(JSONResult.err("账号密码错误"));
+                return ;
+            }
+            const hashPwd = "$2a$10$WWJNydRTYeX0qZtGuzKmz.XbsCdy3mi/ctoOIsfIz2IVf49o2XRa6";
+            const compareResult = await _compare(String(body.pwd), hashPwd);
+            if (compareResult){
+                const token = await createToken("szu-m");
+                ctx.rest(JSONResult.ok({token}));
+            }else{
+                ctx.rest(JSONResult.err("账号密码错误"));
+            }
+        }catch (e) {
+            throw e
         }
     }
 
