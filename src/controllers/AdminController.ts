@@ -30,7 +30,7 @@ export default class AdminController{
                 ctx.rest(JSONResult.err("账号密码错误"));
                 return ;
             }
-            const hashPwd = "$2a$10$WWJNydRTYeX0qZtGuzKmz.XbsCdy3mi/ctoOIsfIz2IVf49o2XRa6";
+            const hashPwd = "$2a$10$WWJNydRTYeX0qZtGuzKmz.XbsCdy3mi/ctoOIsfIz2IVf49o2XRa6"; //szu@123
             const compareResult = await _compare(String(body.pwd), hashPwd);
             if (compareResult){
                 const token = await createToken("szu-m");
