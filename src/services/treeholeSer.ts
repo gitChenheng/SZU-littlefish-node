@@ -1,9 +1,13 @@
 import {
     createTreeHole,
     findMyTreeHoles,
-    findTreeHoleComments,
+    findTreeHoleComments, findTreeHoles,
     insertTreeHoleComment
 } from "@/services/dao/treeholeDao";
+
+export const getAllTreeHoles = async () => {
+    return await findTreeHoles();
+}
 
 export const getMyTreeHoles = async (uid: string) => {
     return await findMyTreeHoles(uid);

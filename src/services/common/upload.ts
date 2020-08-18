@@ -5,7 +5,7 @@ import JSONResult from "@/utils/JSONResult";
 
 export const upload = async (ctx) => {
     const fileName = ctx.request.body.name || generateId(6, 16);
-    const file = ctx.request.files.file;
+    const file = ctx.request.files.filename;
     if (file.size > 2000000){
         ctx.rest(JSONResult.err("上传文件过大，请不要超过2M"));
         return;

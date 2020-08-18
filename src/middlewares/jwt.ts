@@ -9,15 +9,7 @@ export const sign = (obj) => {
 }
 
 export const urlJudge = (request_url) => {
-    if (whiteList.includes(request_url)){
-        return true;
-    }
-    // for (const o of request_url){
-    //     if (request_url.startsWith(o)){
-    //         return true;
-    //     }
-    // }
-    return false;
+    return !!whiteList.includes(request_url);
 }
 
 export const verify = () => {

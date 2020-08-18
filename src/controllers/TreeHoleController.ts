@@ -3,7 +3,7 @@ import {Context} from "koa";
 import JSONResult from "@/utils/JSONResult";
 import {
     addMyTreeHole,
-    addTreeHoleComment,
+    addTreeHoleComment, getAllTreeHoles,
     getMyTreeHoles,
     getTreeHoleComments
 } from "@/services/treeholeSer";
@@ -11,6 +11,17 @@ import {getUid} from "@/services/userSer";
 
 @Ctrl
 export default class TreeHoleController {
+
+    @Api
+    @Get
+    public static async getAllTreeHoles(ctx: Context){
+        try {
+            const res = await getAllTreeHoles();
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            throw e;
+        }
+    }
 
     @Api
     @Get

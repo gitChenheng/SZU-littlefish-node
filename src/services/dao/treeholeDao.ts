@@ -2,6 +2,13 @@ import TreeHole from "@/models/entity/TreeHole";
 import TreeHoleComment from "@/models/entity/TreeHoleComment";
 import {CommonExcludeAttributes} from "@/constans/global";
 
+export const findTreeHoles = async (): Promise<TreeHole[]> => {
+    return await TreeHole.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes, "uid"]},
+        raw: true,
+    })
+}
+
 export const findMyTreeHoles = async (uid: string): Promise<TreeHole[]> => {
     return await TreeHole.findAll({
         attributes: {exclude: [...CommonExcludeAttributes]},

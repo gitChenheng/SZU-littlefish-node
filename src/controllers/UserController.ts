@@ -7,6 +7,8 @@ import {Context} from "koa";
 import {findBaseUserInCondition} from "@/services/baseDataSer";
 import {getAllChildren} from "@/services/parentStudentSer";
 import {getTranscriptsById} from "@/services/transcriptSer";
+import WXBizDataCrypt from "@/utils/watermark/WXBizDataCrypt";
+import {APP_ID} from "@/constans/wx";
 
 @Ctrl
 export default class UserController{
@@ -22,11 +24,10 @@ export default class UserController{
                 ctx.rest(JSONResult.err(jscode2session.errmsg))
             }else{
                 const openid = JSON.parse(jscode2session).openid;
-                // console.log('openid',openid)
-                // if (!openid){
-                //     ctx.rest(JSONResult.err("登录失败,缺省openid"));
-                //     return ;
-                // }
+                if (!openid){
+                    ctx.rest(JSONResult.err("登录失败,缺省openid"));
+                    return ;
+                }
                 const userItem = {
                     ...body,
                     openid,
@@ -64,10 +65,33 @@ export default class UserController{
 
     @Api
     @Post
+    public static async getPhoneNum(ctx: Context){
+        const body = ctx.request.body;
+        try {
+            const jcs = await js_code2_session(body.code);
+            if (jcs.errcode){
+                ctx.rest(JSONResult.err(jcs.errmsg))
+            }else{
+                const iv = body.iv;
+                const encryptedData = body.encryptedData;
+                const pc = new WXBizDataCrypt(APP_ID, JSON.parse(jcs).session_key);
+                const data = pc.decryptData(encryptedData, iv);
+                ctx.rest(JSONResult.ok({
+                    phone: data.purePhoneNumber,
+                    countryCode: data.countryCode,
+                }))
+            }
+        }catch (e) {
+            throw e;
+        }
+    }
+
+    @Api
+    @Post
     public static async completeUserInfo(ctx: Context) {
         const body = ctx.request.body;
-        const {role, phone, validCode, name, teachCardNum, studyNum} = body;
-        if (!role || !phone || !validCode || !name){
+        const {role, phone, name, teachCardNum, studyNum} = body;
+        if (!role || !phone || !name){
             ctx.rest(JSONResult.err());
             return ;
         }

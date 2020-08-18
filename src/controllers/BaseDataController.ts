@@ -2,8 +2,8 @@ import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers, findBaseUs
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
-import {bulkCreatePS} from "@/services/parentStudentSer";
-import {addBulkTranscripts} from "@/services/transcriptSer";
+import {bulkCreatePS, getAllParentStudent} from "@/services/parentStudentSer";
+import {addBulkTranscripts, getAllTranscripts} from "@/services/transcriptSer";
 import {getUserByStudyNum} from "@/services/userSer";
 import {upload} from "@/services/common/upload";
 
@@ -24,10 +24,38 @@ export default class BaseDataController{
 
     @Api
     @Get
-    public static async getBaseStudents(ctx: Context){
+    public static async getBaseUsers(ctx: Context){
         const params = ctx.request.query;
         try {
             const res = await findBaseUsersInCondition(params);
+            if (res)
+                ctx.rest(JSONResult.ok(res));
+            else
+                ctx.rest(JSONResult.err())
+        }catch (e) {
+            throw e;
+        }
+    }
+
+    @Api
+    @Get
+    public static async getBaseParentStudent(ctx: Context){
+        try {
+            const res = await getAllParentStudent();
+            if (res)
+                ctx.rest(JSONResult.ok(res));
+            else
+                ctx.rest(JSONResult.err())
+        }catch (e) {
+            throw e;
+        }
+    }
+
+    @Api
+    @Get
+    public static async getAllTranscripts(ctx: Context){
+        try {
+            const res = await getAllTranscripts();
             if (res)
                 ctx.rest(JSONResult.ok(res));
             else
@@ -106,14 +134,19 @@ export default class BaseDataController{
     @Post
     public static async exportTranscripts(ctx: Context){
         const body = ctx.request.body;
+        console.log(body)
         try {
             const transcripts: any[] = [];
             for (const o of body){
                 const userInfo = await getUserByStudyNum(o.studyNum);
-                transcripts.push({
-                    ...o,
-                    uid: userInfo.id,
-                })
+                if (userInfo){
+                    transcripts.push({
+                        ...o,
+                        uid: userInfo.id,
+                    })
+                }else{
+                    transcripts.push(o)
+                }
             }
             console.log(transcripts)
             const psRes = await addBulkTranscripts(transcripts);

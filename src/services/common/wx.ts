@@ -25,7 +25,7 @@ export const at_server = async () => {
 }
 
 export const get_access_token = async () => {
-    const cache_access_token = this.get(ACCESS_TOKEN);
+    const cache_access_token = get(ACCESS_TOKEN);
     if (cache_access_token){
         return JSON.parse(cache_access_token);
     }else{

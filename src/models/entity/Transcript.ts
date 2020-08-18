@@ -6,6 +6,7 @@ import BaseEntity from "@/models/common/BaseEntity";
 export default class Transcript extends BaseEntity{
 
     // @ForeignKey(() => User)
+    @AllowNull
     @Column({type: STRING})
     public uid: string;
 
@@ -27,12 +28,15 @@ export default class Transcript extends BaseEntity{
     @Column({type: DECIMAL(8, 2), field: "relate_rank"})//相对排名
     public relateRank: number;
 
+    @AllowNull
     @Column({type: STRING(30), field: "pro_rank"})//专业排名
     public proRank: string;
 
+    @AllowNull
     @Column({type: STRING(30), field: "grade_rank"})//年级排名
     public gradeRank: string;
 
+    @AllowNull
     @Column({type: INTEGER, field: "grade_student"})//年级人数
     public gradeStudent: number;
 

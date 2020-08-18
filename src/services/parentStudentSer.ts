@@ -1,4 +1,12 @@
-import {bulkCreateParentStudent, getChildrenByParent} from "@/services/dao/parentStudentDao";
+import {
+    bulkCreateParentStudent,
+    findAllParentStudent,
+    getChildrenByParent
+} from "@/services/dao/parentStudentDao";
+
+export const getAllParentStudent = async () => {
+    return await findAllParentStudent();
+}
 
 interface IParentStudent {
     parentId?: string;
