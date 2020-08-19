@@ -9,9 +9,7 @@ export const getAllParentStudent = async () => {
 }
 
 interface IParentStudent {
-    parentId?: string;
     phone: string;
-    studentId?: string;
     studentPhone: string;
 }
 export const bulkCreatePS = async (records: IParentStudent[]) => {
