@@ -133,7 +133,6 @@ export default class AnnController {
         try {
             const {id} = body;
             delete body.id;
-            console.log(id)
             const res = await completeTogether(body, id);
             if (res)
                 ctx.rest(JSONResult.ok());

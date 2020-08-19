@@ -51,9 +51,10 @@ export const createTogether = async (item) => {
 }
 
 export const updateTogether = async (obj, id) => {
+    console.log(obj, id)
     return await Together.update(
         obj,
-        {where: id}
+        {where: {id}}
     );
 }
 

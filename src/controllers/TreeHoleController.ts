@@ -17,7 +17,12 @@ export default class TreeHoleController {
     public static async getAllTreeHoles(ctx: Context){
         try {
             const res = await getAllTreeHoles();
-            ctx.rest(JSONResult.ok(res));
+            if (res.length){
+                for (const it of res){
+                    it.comments = await getTreeHoleComments(it.id);
+                }
+                ctx.rest(JSONResult.ok(res));
+            }
         }catch (e) {
             throw e;
         }

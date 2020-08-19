@@ -26,7 +26,7 @@ export default class User extends Model<User>{
     public name: string;
 
     @Unique
-    @AllowNull
+    @AllowNull(false)
     @Column(STRING(20))
     public phone: string;
 
