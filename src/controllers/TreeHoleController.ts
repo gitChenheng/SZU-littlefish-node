@@ -34,7 +34,12 @@ export default class TreeHoleController {
         try {
             const uid = await getUid(ctx);
             const res = await getMyTreeHoles(uid);
-            ctx.rest(JSONResult.ok(res));
+            if (res.length){
+                for (const it of res){
+                    it.comments = await getTreeHoleComments(it.id);
+                }
+                ctx.rest(JSONResult.ok(res));
+            }
         }catch (e) {
             throw e;
         }
