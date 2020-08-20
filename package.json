@@ -20,6 +20,7 @@
     "babel-register": "^6.26.0",
     "bcryptjs": "^2.4.3",
     "fs": "0.0.1-security",
+    "global": "^4.4.0",
     "helmet": "^3.23.3",
     "https": "^1.0.0",
     "ioredis": "^4.14.1",
@@ -42,7 +43,7 @@
     "sequelize-typescript": "^0.6.11",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
-    "typescript": "^3.9.6",
+    "typescript": "^3.9.7",
     "typescript-transform-paths": "^1.1.14",
     "typings": "^2.1.1",
     "xss": "^1.0.7"

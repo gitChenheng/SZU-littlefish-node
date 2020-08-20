@@ -12,6 +12,7 @@ export default class User extends Model<User>{
     @Column(STRING)
     public openid: string;
 
+  	@AllowNull
     @Column({type: STRING, field: "nick_name"})
     public nickName: string;
 
@@ -19,14 +20,15 @@ export default class User extends Model<User>{
     @Column(STRING)
     public pwd: string;
 
+  	@AllowNull
     @Column(TINYINT)//1学生 2教师 3家长 10管理员
     public role: number;
 
+  	@AllowNull
     @Column(STRING)
     public name: string;
 
-    @Unique
-    @AllowNull(false)
+    @AllowNull
     @Column(STRING(20))
     public phone: string;
 

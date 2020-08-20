@@ -91,7 +91,7 @@ export const createUser = async (item) => {
         id: generateId(5),
         ...item,
     }
-    return await User.create(item);
+	return await User.create(item);
 }
 
 export const deleteUser = async (id) => {
