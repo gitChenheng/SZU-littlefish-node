@@ -18,7 +18,11 @@ export const addMyTreeHole  = async (item) => {
 }
 
 export const getTreeHoleComments = async (treeHoleId) => {
-    return await findTreeHoleComments(treeHoleId);
+    const comments = await findTreeHoleComments(treeHoleId);
+    return comments.map((item: any) => ({
+        ...item,
+        created_at: item.created_at ? new Date(item.created_at).toLocaleString() : ""
+    }))
 }
 
 export const addTreeHoleComment  = async (item) => {

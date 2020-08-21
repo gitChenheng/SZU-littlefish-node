@@ -38,7 +38,11 @@ export const addRecruit = async (item) => {
 }
 
 export const getTogether = async () => {
-    return await findAllTogether();
+    const res = await findAllTogether();
+    return res.map((item: any) => ({
+        ...item,
+        time: item.time ? new Date(item.time).toLocaleString() : ""
+    }))
 }
 
 export const addTogether = async (item: ICreateTogether) => {

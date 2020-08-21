@@ -5,7 +5,7 @@ node_modules/
 public/uploads/
 npm-debug.log
 
-**/*.log
+log/
 **/.next
 **/.docz
 
