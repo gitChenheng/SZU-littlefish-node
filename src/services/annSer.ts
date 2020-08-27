@@ -41,7 +41,7 @@ export const getTogether = async () => {
     const res = await findAllTogether();
     return res.map((item: any) => ({
         ...item,
-        time: item.time ? new Date(item.time).toLocaleString() : ""
+        time: item.time ? new Date(item.time).toLocaleString("zh", { timeZone: "UTC"}) : ""
     }))
 }
 

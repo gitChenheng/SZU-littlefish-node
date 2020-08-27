@@ -21,7 +21,7 @@ export const getTreeHoleComments = async (treeHoleId) => {
     const comments = await findTreeHoleComments(treeHoleId);
     return comments.map((item: any) => ({
         ...item,
-        created_at: item.created_at ? new Date(item.created_at).toLocaleString() : ""
+        created_at: item.created_at ? new Date(item.created_at).toLocaleString("zh", { timeZone: "UTC"}) : ""
     }))
 }
 
