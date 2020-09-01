@@ -152,6 +152,10 @@ export default class UserController{
                 }
                 const phone = userInfo.phone;
                 const res = await getAllChildren(phone);
+                if (!res.length){
+                    ctx.rest(JSONResult.ok(res));
+                    return ;
+                }
                 const allChildren = [];
                 if (res.length){
                     for (const o of res){
