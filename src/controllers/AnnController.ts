@@ -130,8 +130,20 @@ export default class AnnController {
     @Post
     public static async completeTogether(ctx: Context){
         const body = ctx.request.body;
+        const {id, time, address} = body;
+        if (!id){
+            ctx.rest(JSONResult.err("id不存在"));
+            return ;
+        }
+        if (!time){
+            ctx.rest(JSONResult.err("请填写时间"));
+            return ;
+        }
+        if (!address){
+            ctx.rest(JSONResult.err("请填写地址"));
+            return ;
+        }
         try {
-            const {id} = body;
             delete body.id;
             const res = await completeTogether(body, id);
             if (res)

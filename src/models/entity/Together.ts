@@ -15,9 +15,11 @@ export default class Together extends BaseEntity{
     @Column({type: TEXT, field: "knowledge_point"})
     public knowledgePoint: string;
 
+    @AllowNull
     @Column(BIGINT)
     public time: number;
 
+    @AllowNull
     @Column(TEXT)
     public address: string;
 
