@@ -1,6 +1,7 @@
 import {IStudent, ITeacher} from "@/models/interface/user";
 import {bulkCreateBaseUsers, findAllInCondition, findOneInCondition} from "@/services/dao/baseDataDao";
 import {IBaseUser, IRole} from "@/models/interface/baseUser";
+import {getInCondition} from "@/services/dao/userDao";
 
 export const addBulkBaseStudents = async (records: IStudent[]) => {
     return await bulkCreateBaseUsers(records);
@@ -20,4 +21,8 @@ export const findBaseUserInCondition = async (params: IBaseUser) => {
 
 export const findBaseUsersInCondition = async (params: IRole) => {
     return await findAllInCondition(params)
+}
+
+export const getBaseUserByPhone = async (phone: string) => {
+    return await findOneInCondition({phone})
 }

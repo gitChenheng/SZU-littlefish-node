@@ -4,9 +4,9 @@ import JSONResult from "../utils/JSONResult";
 import {js_code2_session} from "@/services/common/wx";
 import {utf16toEntities} from "@/utils/util";
 import {Context} from "koa";
-import {findBaseUserInCondition} from "@/services/baseDataSer";
+import {findBaseUserInCondition, getBaseUserByPhone} from "@/services/baseDataSer";
 import {getAllChildren} from "@/services/parentStudentSer";
-import {getTranscriptsById} from "@/services/transcriptSer";
+import {getAllByStudyNum, getTranscriptsById} from "@/services/transcriptSer";
 import WXBizDataCrypt from "@/utils/watermark/WXBizDataCrypt";
 import {APP_ID} from "@/constans/wx";
 
@@ -159,8 +159,8 @@ export default class UserController{
                 const allChildren = [];
                 if (res.length){
                     for (const o of res){
-                        const childInfo = await getUserByPhone(o.studentPhone);
-                        const transcripts = await getTranscriptsById(childInfo.id);
+                        const childInfo = await getBaseUserByPhone(o.studentPhone);
+                        const transcripts = await getAllByStudyNum(childInfo.studyNum);
                         allChildren.push({
                             ...childInfo,
                             transcripts

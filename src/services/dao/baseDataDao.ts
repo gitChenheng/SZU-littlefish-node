@@ -1,6 +1,7 @@
 import BaseUser from "@/models/entity/BaseUser";
 import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
+import User from "@/models/entity/User";
 
 export const bulkCreateBaseUsers = async (records: any[]) => {
     const res = await BaseUser.bulkCreate(records);

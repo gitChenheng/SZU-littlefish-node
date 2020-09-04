@@ -42,3 +42,11 @@ export const getAllById = async (uid) => {
         where: {uid}
     });
 }
+
+export const getAllInCondition = async (condition) => {
+    return await Transcript.findAll({
+        attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true,
+        where: condition
+    });
+}
