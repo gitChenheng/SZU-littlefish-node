@@ -11,7 +11,7 @@ export const findAllTranscripts = async () => {
     const db = dbCtx();
     return await db.query(
         `SELECT
-        t.id,t.term,t.gpa,
+        t.id,t.phone,t.study_num AS studyNum,t.term,t.gpa,
         t.obtain_credit AS obtainCredit,
         t.elective_credit AS electiveCredit,
         t.rank,t.relate_rank AS relateRank,
@@ -23,9 +23,9 @@ export const findAllTranscripts = async () => {
         FROM
         transcript t
         INNER JOIN
-        user u
+        base_user u
         WHERE
-        t.uid=u.id`,
+        t.study_num=u.study_num`,
         {
             type: db.QueryTypes.SELECT,
             plain: false,

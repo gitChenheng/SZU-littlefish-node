@@ -22,6 +22,8 @@ export default class TreeHoleController {
                     it.comments = await getTreeHoleComments(it.id);
                 }
                 ctx.rest(JSONResult.ok(res));
+            }else {
+                ctx.rest(JSONResult.ok(res));
             }
         }catch (e) {
             throw e;

@@ -136,20 +136,19 @@ export default class BaseDataController{
         const body = ctx.request.body;
         console.log(body)
         try {
-            const transcripts: any[] = [];
-            for (const o of body){
-                const userInfo = await getUserByStudyNum(o.studyNum);
-                if (userInfo){
-                    transcripts.push({
-                        ...o,
-                        uid: userInfo.id,
-                    })
-                }else{
-                    transcripts.push(o)
-                }
-            }
-            console.log(transcripts)
-            const psRes = await addBulkTranscripts(transcripts);
+            // const transcripts: any[] = [];
+            // for (const o of body){
+            //     const userInfo = await getUserByStudyNum(o.studyNum);
+            //     if (userInfo){
+            //         transcripts.push({
+            //             ...o,
+            //             uid: userInfo.id,
+            //         })
+            //     }else{
+            //         transcripts.push(o)
+            //     }
+            // }
+            const psRes = await addBulkTranscripts(body);
             console.log("psRes", psRes)
             if (psRes)
                 ctx.rest(JSONResult.ok("导入成功"))

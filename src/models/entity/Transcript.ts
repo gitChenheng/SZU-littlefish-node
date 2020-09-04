@@ -1,4 +1,4 @@
-import {Model, Table, Column, PrimaryKey, AllowNull, ForeignKey} from "sequelize-typescript";
+import {Model, Table, Column, PrimaryKey, AllowNull, ForeignKey, Unique} from "sequelize-typescript";
 import { STRING, DATE, INTEGER, TINYINT, BIGINT, TEXT, BOOLEAN, DECIMAL } from "sequelize";
 import BaseEntity from "@/models/common/BaseEntity";
 
@@ -6,9 +6,14 @@ import BaseEntity from "@/models/common/BaseEntity";
 export default class Transcript extends BaseEntity{
 
     // @ForeignKey(() => User)
+    @Unique
     @AllowNull
-    @Column({type: STRING})
-    public uid: string;
+    @Column(STRING(20))
+    public phone: string;
+
+    @AllowNull
+    @Column({type: STRING, field: "study_num"})
+    public studyNum: string;
 
     @Column(STRING)//学期
     public term: string;
