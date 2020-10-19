@@ -1,11 +1,23 @@
 import BaseUser from "@/models/entity/BaseUser";
 import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
-import User from "@/models/entity/User";
 
 export const bulkCreateBaseUsers = async (records: any[]) => {
     const res = await BaseUser.bulkCreate(records);
     return res.length === records.length;
+}
+
+export const deleteBaseUser = async (id) => {
+    return await BaseUser.destroy({
+        where: {id}
+    });
+}
+
+export const updateBaseUser = async (item, id) => {
+    return await BaseUser.update(
+        item,
+        {where: {id}}
+    )
 }
 
 export const findOneInCondition = async (params) => {

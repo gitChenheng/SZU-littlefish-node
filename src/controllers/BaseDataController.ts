@@ -1,4 +1,5 @@
-import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers, findBaseUsersInCondition} from "@/services/baseDataSer";
+import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers, findBaseUsersInCondition,
+    removeBaseUserById, changeBaseUserById} from "@/services/baseDataSer";
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
@@ -159,4 +160,35 @@ export default class BaseDataController{
         }
     }
 
+    @Api
+    @Post
+    public static async removeBaseUserById(ctx : Context){
+        const body = ctx.request.body;
+        console.log(body);
+        try {
+            const res = removeBaseUserById(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
+
+    @Api
+    @Post
+    public static async changeBaseUserById(ctx : Context){
+        const body = ctx.request.body;
+        const id = body.id;
+        delete body.id;
+        delete body.phone;
+        try {
+            const res = await changeBaseUserById(body, id);
+            if (res){
+                ctx.rest(JSONResult.ok())
+            }else{
+                ctx.rest(JSONResult.err("update failed"))
+            }
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
 }
