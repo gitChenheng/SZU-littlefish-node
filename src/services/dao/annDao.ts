@@ -4,11 +4,23 @@ import RecruitAnnounce from "@/models/entity/RecruitAnnounce";
 import Together from "@/models/entity/Together";
 import {dbCtx} from "@/server/db/db_context";
 import {CommonExcludeAttributes} from "@/constans/global";
+import BaseUser from "@/models/entity/BaseUser";
 
 export const getAllScientific = async () => {
     return await Scientific.findAll({
         attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
+    });
+}
+export const updateScientific = async (item, id) => {
+    return await Scientific.update(
+        item,
+        {where: {id}}
+    )
+}
+export const deleteScientific = async (id) => {
+    return await Scientific.destroy({
+        where: {id}
     });
 }
 
@@ -25,6 +37,17 @@ export const getAllCompetitions = async (type) => {
             }
         }
     )
+}
+export const updateCompetition = async (item, id) => {
+    return await Competition.update(
+        item,
+        {where: {id}}
+    )
+}
+export const deleteCompetition = async (id) => {
+    return await Competition.destroy({
+        where: {id}
+    });
 }
 
 export const getAllRecruits = async () => {
@@ -51,7 +74,6 @@ export const createTogether = async (item) => {
 }
 
 export const updateTogether = async (obj, id) => {
-    console.log(obj, id)
     return await Together.update(
         obj,
         {where: {id}}

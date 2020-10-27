@@ -164,7 +164,6 @@ export default class BaseDataController{
     @Post
     public static async removeBaseUserById(ctx : Context){
         const body = ctx.request.body;
-        console.log(body);
         try {
             const res = removeBaseUserById(body.id);
             ctx.rest(JSONResult.ok(res));

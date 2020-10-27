@@ -1,13 +1,9 @@
 import {Api, Ctrl, Get, Post} from "@/decorators/action";
 import {Context} from "koa";
 import {
-    addCompetition,
-    addScientific,
-    getScientificDirects,
-    getCompetitions,
-    addRecruit,
-    getRecruits,
-    addTogether, getTogether, completeTogether
+    addCompetition, addScientific, getScientificDirects, getCompetitions, addRecruit,
+    getRecruits, addTogether, getTogether, completeTogether,
+    removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById,
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
 import {getUid} from "@/services/userSer";
@@ -25,7 +21,33 @@ export default class AnnController {
             throw e;
         }
     }
-
+    @Api
+    @Post
+    public static async removeScientificDirectById(ctx : Context){
+        const body = ctx.request.body;
+        try {
+            const res = removeScientificDirects(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
+    @Api
+    @Post
+    public static async changeScientificDirectById(ctx : Context){
+        const body = ctx.request.body;
+        const id = body.id;
+        try {
+            const res = await changeScientificDirectsById(body, id);
+            if (res){
+                ctx.rest(JSONResult.ok())
+            }else{
+                ctx.rest(JSONResult.err("update failed"))
+            }
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
     @Api
     @Post
     public static async exportScientificDirect(ctx: Context){
@@ -50,6 +72,33 @@ export default class AnnController {
             ctx.rest(JSONResult.ok(res));
         }catch (e) {
             throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async removeCompetitionById(ctx : Context){
+        const body = ctx.request.body;
+        try {
+            const res = removeCompetition(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
+    @Api
+    @Post
+    public static async changeCompetitionById(ctx : Context){
+        const body = ctx.request.body;
+        const id = body.id;
+        try {
+            const res = await changeCompetitionById(body, id);
+            if (res){
+                ctx.rest(JSONResult.ok())
+            }else{
+                ctx.rest(JSONResult.err("update failed"))
+            }
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
         }
     }
 
