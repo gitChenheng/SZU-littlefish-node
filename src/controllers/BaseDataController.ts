@@ -3,9 +3,8 @@ import {addBulkBaseStudents, addBulkBaseParents, addBulkBaseTeachers, findBaseUs
 import {Ctrl, Api, Get, Post, View} from "@/decorators/action";
 import JSONResult from "../utils/JSONResult";
 import {Context} from "koa";
-import {bulkCreatePS, getAllParentStudent} from "@/services/parentStudentSer";
-import {addBulkTranscripts, getAllTranscripts} from "@/services/transcriptSer";
-import {getUserByStudyNum} from "@/services/userSer";
+import {bulkCreatePS, getAllParentStudent, removeParentStudentById} from "@/services/parentStudentSer";
+import {addBulkTranscripts, changeTranscriptById, getAllTranscripts, removeTranscriptById} from "@/services/transcriptSer";
 import {upload} from "@/services/common/upload";
 
 @Ctrl
@@ -63,6 +62,35 @@ export default class BaseDataController{
                 ctx.rest(JSONResult.err())
         }catch (e) {
             throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async removeTranscriptById(ctx : Context){
+        const body = ctx.request.body;
+        try {
+            const res = removeTranscriptById(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
+    @Api
+    @Post
+    public static async changeTranscriptById(ctx : Context){
+        const body = ctx.request.body;
+        const id = body.id;
+        delete body.id;
+        delete body.phone;
+        try {
+            const res = await changeTranscriptById(body, id);
+            if (res){
+                ctx.rest(JSONResult.ok())
+            }else{
+                ctx.rest(JSONResult.err("update failed"))
+            }
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
         }
     }
 
@@ -128,6 +156,17 @@ export default class BaseDataController{
                 ctx.rest(JSONResult.err("导入失败"))
         }catch (e) {
             ctx.rest(JSONResult.err(e))
+        }
+    }
+    @Api
+    @Post
+    public static async removeParentStudentById(ctx : Context){
+        const body = ctx.request.body;
+        try {
+            const res = removeParentStudentById(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
         }
     }
 

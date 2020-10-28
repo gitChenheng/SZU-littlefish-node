@@ -7,6 +7,11 @@ export const findAllParentStudent = async () => {
         raw: true,
     });
 }
+export const deleteParentStudent = async (id) => {
+    return await ParentStudent.destroy({
+        where: {id}
+    });
+}
 
 export const bulkCreateParentStudent = async (records: any[]) => {
     const res = await ParentStudent.bulkCreate(records);

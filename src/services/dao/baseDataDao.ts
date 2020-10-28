@@ -34,7 +34,8 @@ export const findAllInCondition = async (params) => {
         return await db.query(
             `
             select
-            CONCAT(b.id,s.id) as id,
+            ps.id as id,
+            CONCAT(b.id,s.id) as combId,
             b.name,b.phone,
             ps.student_phone AS studentPhone,
             s.name AS studentName
@@ -45,7 +46,7 @@ export const findAllInCondition = async (params) => {
             on b.role='3' and b.phone=ps.phone
             LEFT JOIN
             base_user s
-            on ps.student_phone=s.phone
+            on ps.student_phone=s.phone WHERE ps.deleted_at IS NULL
             `,
             {
                 type: db.QueryTypes.SELECT,

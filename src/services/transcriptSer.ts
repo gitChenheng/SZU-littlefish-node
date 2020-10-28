@@ -1,4 +1,5 @@
-import {bulkCreateBaseTranscript, findAllTranscripts, getAllById, getAllInCondition} from "@/services/dao/transcriptDao";
+import {bulkCreateBaseTranscript, deleteTranscript, findAllTranscripts,
+    getAllById, getAllInCondition, updateTranscript} from "@/services/dao/transcriptDao";
 
 export const addBulkTranscripts = async (records) => {
     return await bulkCreateBaseTranscript(records);
@@ -10,6 +11,12 @@ export const getTranscriptsById = async (id: string) => {
 
 export const getAllTranscripts = async () => {
     return await findAllTranscripts();
+}
+export const changeTranscriptById = async (item, id) => {
+    return await updateTranscript(item, id);
+}
+export const removeTranscriptById = async (id) => {
+    return await deleteTranscript(id);
 }
 
 export const getAllByStudyNum = async (studyNum: string) => {

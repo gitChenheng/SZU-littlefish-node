@@ -1,6 +1,7 @@
 import Transcript from "@/models/entity/Transcript";
 import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
+import BaseUser from "@/models/entity/BaseUser";
 
 export const bulkCreateBaseTranscript = async (records: any[]) => {
     const res = await Transcript.bulkCreate(records);
@@ -25,13 +26,25 @@ export const findAllTranscripts = async () => {
         INNER JOIN
         base_user u
         WHERE
-        t.study_num=u.study_num`,
+        t.study_num=u.study_num AND t.deleted_at IS NULL`,
         {
             type: db.QueryTypes.SELECT,
             plain: false,
             raw: true,
             replacements: {}
         }
+    )
+}
+export const deleteTranscript = async (id) => {
+    return await Transcript.destroy({
+        where: {id}
+    });
+}
+
+export const updateTranscript = async (item, id) => {
+    return await Transcript.update(
+        item,
+        {where: {id}}
     )
 }
 

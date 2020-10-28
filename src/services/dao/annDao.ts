@@ -27,7 +27,7 @@ export const deleteScientific = async (id) => {
 export const getAllCompetitions = async (type) => {
     const db = dbCtx();
     return await db.query(
-        "SELECT `title`,`introduce`,`condition`,`schedule`,`way` FROM competition where type=:type",
+        "SELECT `id`,`title`,`introduce`,`condition`,`schedule`,`way` FROM competition where type=:type AND deleted_at IS NULL",
         {
             type: db.QueryTypes.SELECT,
             plain: false,
@@ -54,6 +54,17 @@ export const getAllRecruits = async () => {
     return await RecruitAnnounce.findAll({
         attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
+    });
+}
+export const updateRecruit = async (item, id) => {
+    return await RecruitAnnounce.update(
+        item,
+        {where: {id}}
+    )
+}
+export const deleteRecruit = async (id) => {
+    return await RecruitAnnounce.destroy({
+        where: {id}
     });
 }
 

@@ -3,7 +3,7 @@ import {Context} from "koa";
 import {
     addCompetition, addScientific, getScientificDirects, getCompetitions, addRecruit,
     getRecruits, addTogether, getTogether, completeTogether,
-    removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById,
+    removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById, removeRecruit, changeRecruitById,
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
 import {getUid} from "@/services/userSer";
@@ -126,6 +126,33 @@ export default class AnnController {
             ctx.rest(JSONResult.ok(res));
         }catch (e) {
             throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async removeRecruitById(ctx : Context){
+        const body = ctx.request.body;
+        try {
+            const res = removeRecruit(body.id);
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
+        }
+    }
+    @Api
+    @Post
+    public static async changeRecruitById(ctx : Context){
+        const body = ctx.request.body;
+        const id = body.id;
+        try {
+            const res = await changeRecruitById(body, id);
+            if (res){
+                ctx.rest(JSONResult.ok())
+            }else{
+                ctx.rest(JSONResult.err("update failed"))
+            }
+        }catch (e) {
+            ctx.rest(JSONResult.err(e));
         }
     }
 

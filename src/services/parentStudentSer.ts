@@ -1,11 +1,14 @@
 import {
-    bulkCreateParentStudent,
+    bulkCreateParentStudent, deleteParentStudent,
     findAllParentStudent,
     getChildrenByParent
 } from "@/services/dao/parentStudentDao";
 
 export const getAllParentStudent = async () => {
     return await findAllParentStudent();
+}
+export const removeParentStudentById = async (id) => {
+    return await deleteParentStudent(id);
 }
 
 interface IParentStudent {
