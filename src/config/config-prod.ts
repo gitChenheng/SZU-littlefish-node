@@ -1,6 +1,6 @@
 export default {
     node: {
-        host: "49.234.113.173",
+        host: "106.52.3.52",
         port: 3001,
     },
     redis: {
@@ -16,7 +16,7 @@ export default {
         database: "littlefish",
         username: "root",
         password: "fm@2020",
-        host: "49.234.113.173",
+        host: "106.52.3.52",
         port: 3306,
     },
 }
