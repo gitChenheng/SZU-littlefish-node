@@ -7,6 +7,8 @@ import {
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
 import {getUid} from "@/services/userSer";
+import {get_access_token, msg_sec_check} from "@/services/common/wx";
+import {RISKY_HINT} from "@/constans/code_status";
 
 @Ctrl
 export default class AnnController {
@@ -189,14 +191,27 @@ export default class AnnController {
         const body = ctx.request.body;
         try {
             const uid = await getUid(ctx);
-            const res = await addTogether({
-                ...body,
-                uid
-            });
-            if (res)
-                ctx.rest(JSONResult.ok())
-            else
-                ctx.rest(JSONResult.err());
+            const at = await get_access_token();
+            if (at.errcode){
+                ctx.rest(JSONResult.err(at.errmsg))
+            }else {
+                const access_token = at.access_token;
+                const msg_sec_res = await msg_sec_check(access_token, JSON.stringify(body));
+                if (msg_sec_res.errcode === 87014){
+                    ctx.rest(JSONResult.err(RISKY_HINT))
+                }else if (msg_sec_res.errcode){
+                    ctx.rest(JSONResult.err(msg_sec_res.errmsg))
+                }else {
+                    const res = await addTogether({
+                        ...body,
+                        uid
+                    });
+                    if (res)
+                        ctx.rest(JSONResult.ok())
+                    else
+                        ctx.rest(JSONResult.err());
+                }
+            }
         }catch (e) {
             throw e;
         }

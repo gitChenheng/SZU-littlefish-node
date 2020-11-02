@@ -10,7 +10,11 @@ export const getAllTreeHoles = async () => {
 }
 
 export const getMyTreeHoles = async (uid: string) => {
-    return await findMyTreeHoles(uid);
+    const res = await findMyTreeHoles(uid);
+    return res.map((item: any) => ({
+        ...item,
+        created_at: item.created_at ? new Date(item.created_at).toLocaleString("zh", { timeZone: "UTC"}) : ""
+    }))
 }
 
 export const addMyTreeHole  = async (item) => {

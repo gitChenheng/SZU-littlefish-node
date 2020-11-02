@@ -52,3 +52,7 @@ export const decodeDate = (date, hms) => {
         return new Date(date).getFullYear() + "-" + (Number(new Date(date).getMonth()) + 1) + "-" + new Date(date).getDate()
     }
 }
+
+export const UTCTimeFormat = (time: any) => {
+    return time ? new Date(time).toLocaleString("zh", { timeZone: "UTC"}) : ""
+}
