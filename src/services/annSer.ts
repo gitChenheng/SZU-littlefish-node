@@ -1,12 +1,15 @@
 import {
     getAllScientific, createScientific, createCompetition, getAllCompetitions, createRecruit,
     getAllRecruits, createTogether, findAllTogether, updateTogether, deleteScientific,
-    updateScientific, updateCompetition, deleteCompetition, updateRecruit, deleteRecruit
+    updateScientific, updateCompetition, deleteCompetition, updateRecruit, deleteRecruit, getScientificById
 } from "@/services/dao/annDao";
 import {ICompleteTogether, ICreateTogether} from "@/models/interface/ann";
 
 export const getScientificDirects = async () => {
     return await getAllScientific();
+}
+export const getScientificDirect = async (id) => {
+    return await getScientificById(id);
 }
 export const changeScientificDirectsById = async (item, id) => {
     return await updateScientific(item, id);

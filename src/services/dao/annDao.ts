@@ -12,6 +12,13 @@ export const getAllScientific = async () => {
         raw: true,
     });
 }
+export const getScientificById = async (id) => {
+    return await Scientific.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true,
+        where: {id}
+    });
+}
 export const updateScientific = async (item, id) => {
     return await Scientific.update(
         item,

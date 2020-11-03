@@ -2,7 +2,7 @@ import {Api, Ctrl, Get, Post} from "@/decorators/action";
 import {Context} from "koa";
 import {
     addCompetition, addScientific, getScientificDirects, getCompetitions, addRecruit,
-    getRecruits, addTogether, getTogether, completeTogether,
+    getRecruits, addTogether, getTogether, completeTogether, getScientificDirect,
     removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById, removeRecruit, changeRecruitById,
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
@@ -18,6 +18,17 @@ export default class AnnController {
     public static async getScientificDirect(ctx){
         try {
             const res = await getScientificDirects();
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async getScientificDirectById(ctx){
+        const body = ctx.request.body;
+        try {
+            const res = await getScientificDirect(body.id);
             ctx.rest(JSONResult.ok(res));
         }catch (e) {
             throw e;
