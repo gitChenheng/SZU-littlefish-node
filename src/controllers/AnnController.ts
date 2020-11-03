@@ -3,7 +3,7 @@ import {Context} from "koa";
 import {
     addCompetition, addScientific, getScientificDirects, getCompetitions, addRecruit,
     getRecruits, addTogether, getTogether, completeTogether, getScientificDirect,
-    removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById, removeRecruit, changeRecruitById,
+    removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById, removeRecruit, changeRecruitById, getCompetition,
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
 import {getUid} from "@/services/userSer";
@@ -82,6 +82,17 @@ export default class AnnController {
     public static async getCompetitions(ctx){
         try {
             const res = await getCompetitions();
+            ctx.rest(JSONResult.ok(res));
+        }catch (e) {
+            throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async getCompetitionsById(ctx){
+        const body = ctx.request.body;
+        try {
+            const res = await getCompetition(body.id);
             ctx.rest(JSONResult.ok(res));
         }catch (e) {
             throw e;

@@ -45,6 +45,13 @@ export const getAllCompetitions = async (type) => {
         }
     )
 }
+export const getCompetitionById = async (id) => {
+    return await Competition.findOne({
+        attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true,
+        where: {id}
+    })
+}
 export const updateCompetition = async (item, id) => {
     return await Competition.update(
         item,
