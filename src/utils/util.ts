@@ -54,5 +54,5 @@ export const decodeDate = (date, hms) => {
 }
 
 export const timeFormat = (time: any, zone?) => {
-    return time ? new Date(time).toLocaleString("zh", { timeZone: zone || "Asia/Shanghai"}) : ""
+    return time ? new Date(time).toLocaleString("chinese", { timeZone: zone || "Asia/Shanghai", hour12: false}) : ""
 }
