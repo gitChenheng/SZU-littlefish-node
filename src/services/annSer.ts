@@ -4,6 +4,7 @@ import {
     updateScientific, updateCompetition, deleteCompetition, updateRecruit, deleteRecruit, getScientificById, getCompetitionById
 } from "@/services/dao/annDao";
 import {ICompleteTogether, ICreateTogether} from "@/models/interface/ann";
+import {timeFormat} from "@/utils/util";
 
 export const getScientificDirects = async () => {
     return await getAllScientific();
@@ -37,7 +38,11 @@ export const removeCompetition = async (id) => {
 }
 
 export const getRecruits = async () => {
-    return await getAllRecruits();
+    const res = await getAllRecruits();
+    return res.map((item: any) => ({
+        ...item,
+        created_at: timeFormat(item.created_at)
+    }))
 }
 export const changeRecruitById = async (item, id) => {
     return await updateRecruit(item, id);
@@ -62,7 +67,7 @@ export const getTogether = async () => {
     const res = await findAllTogether();
     return res.map((item: any) => ({
         ...item,
-        time: item.time ? new Date(item.time).toLocaleString("zh", { timeZone: "UTC"}) : ""
+        time: timeFormat(item.time)
     }))
 }
 

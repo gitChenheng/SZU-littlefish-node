@@ -4,7 +4,6 @@ import RecruitAnnounce from "@/models/entity/RecruitAnnounce";
 import Together from "@/models/entity/Together";
 import {dbCtx} from "@/server/db/db_context";
 import {CommonExcludeAttributes} from "@/constans/global";
-import BaseUser from "@/models/entity/BaseUser";
 
 export const getAllScientific = async () => {
     return await Scientific.findAll({
@@ -66,7 +65,8 @@ export const deleteCompetition = async (id) => {
 
 export const getAllRecruits = async () => {
     return await RecruitAnnounce.findAll({
-        attributes: {exclude: [...CommonExcludeAttributes]},
+        // attributes: {exclude: [...CommonExcludeAttributes]},
+        order: [["created_at", "DESC"]],
         raw: true,
     });
 }

@@ -53,6 +53,6 @@ export const decodeDate = (date, hms) => {
     }
 }
 
-export const UTCTimeFormat = (time: any) => {
-    return time ? new Date(time).toLocaleString("zh", { timeZone: "UTC"}) : ""
+export const timeFormat = (time: any, zone?) => {
+    return time ? new Date(time).toLocaleString("zh", { timeZone: zone || "Asia/Shanghai"}) : ""
 }
