@@ -173,10 +173,19 @@ export default class UserController{
                     for (const o of res){
                         const childInfo = await getBaseUserByPhone(o.studentPhone);
                         const transcripts = await getAllByStudyNum(childInfo.studyNum);
-                        allChildren.push({
-                            ...childInfo,
-                            transcripts
-                        })
+                        const userChildInfo = await getUserByPhone(o.studentPhone); //user表
+                        if (userChildInfo && userChildInfo.avatarUrl){
+                            allChildren.push({
+                                ...childInfo,
+                                avatarUrl: userChildInfo.avatarUrl,
+                                transcripts
+                            })
+                        }else{
+                            allChildren.push({
+                                ...childInfo,
+                                transcripts
+                            })
+                        }
                     }
                 }
                 ctx.rest(JSONResult.ok(allChildren))
