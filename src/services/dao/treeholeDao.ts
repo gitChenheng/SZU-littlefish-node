@@ -14,7 +14,8 @@ export const findMyTreeHoles = async (uid: string): Promise<TreeHole[]> => {
     return await TreeHole.findAll({
         // attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
-        where: {uid}
+        where: {uid},
+        order: [["created_at", "DESC"]],
     })
 }
 

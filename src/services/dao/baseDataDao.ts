@@ -3,7 +3,18 @@ import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
 
 export const bulkCreateBaseUsers = async (records: any[]) => {
-    const res = await BaseUser.bulkCreate(records);
+    /**
+     * records	Array	要创建实例的对象（键/值 对）列表
+     * [options]	Object
+     * [options.fields]	Array	要插入的字段。默认全部
+     * [options.validate=true]	Boolean	插入每条记录前进行验证
+     * [options.hooks=true]	Boolean	在执行前/后创建钩子
+     * [options.individualHooks=false]	Boolean	在执行前/后为每个实例创建钩子
+     * [options.ignoreDuplicates=false]	Boolean	忽略重复主键（Postgres不支持）
+     * [options.updateOnDuplicate]	Array	如果行键已存在是否更新（mysql & mariadb支持）. 默认为更新
+     * [options.transaction]	Transaction	在事务中执行查询
+     */
+    const res = await BaseUser.bulkCreate(records, {ignoreDuplicates: true});
     return res.length === records.length;
 }
 

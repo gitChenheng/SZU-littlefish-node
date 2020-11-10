@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === ENV_PROD){
  * setHeaders函数，用于在响应时设置自定义标头。
  * extensionsURL中没有扩展名时，尝试匹配传递的数组中的扩展名以搜索文件。首次发现是送达的。（默认为false）
  */
-app.use(serve(path.join(process.cwd(), "/src/public/"), {maxage: 30 * 24 * 3600 * 1000}));
+app.use(serve(path.join(process.cwd(), "/src/public/"), {maxage: 12 * 30 * 24 * 3600 * 1000}));
 app.use(cors());
 app.use(httpLogger());
 app.use(verify());

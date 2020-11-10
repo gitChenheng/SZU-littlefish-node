@@ -67,6 +67,7 @@ export const getTogether = async () => {
     const res = await findAllTogether();
     return res.map((item: any) => ({
         ...item,
+        created_at: timeFormat(item.created_at),
         time: timeFormat(item.time)
     }))
 }

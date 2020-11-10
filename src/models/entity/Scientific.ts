@@ -10,7 +10,10 @@ export default class Scientific extends BaseEntity{
     public scientificName: string;
 
     @Column(TEXT)
-    public intro: string; //核心成果、简介
+    public intro: string; //简介
+
+    @Column(TEXT)
+    public results: string; //核心成果
 
     @Column(TEXT)
     public direction: string;

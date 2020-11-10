@@ -130,7 +130,7 @@ export default class BaseDataController{
     @Post
     public static async exportBaseParents(ctx: Context){
         const body = ctx.request.body;
-        console.log(body);
+        // console.log(body);
         try {
             const res = await addBulkBaseParents(body);
             if (res)

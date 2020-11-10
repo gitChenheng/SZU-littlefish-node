@@ -107,7 +107,8 @@ export const updateTogether = async (obj, id) => {
 
 export const findAllTogether = async () => {
     return await Together.findAll({
-        attributes: {exclude: [...CommonExcludeAttributes]},
-        raw: true
+        // attributes: {exclude: [...CommonExcludeAttributes]},
+        raw: true,
+        order: [["created_at", "DESC"]],
     });
 }

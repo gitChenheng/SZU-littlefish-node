@@ -23,9 +23,9 @@ export const get = (key) => {
 export const set = (key, value, expire) => {
     const now = new Date().getTime();
     cache_object[key] = {
-    value,
-    expire: expire ? expire * 1000 + now : 0
-};
+        value,
+        expire: expire ? expire * 1000 + now : 0
+    };
 }
 export const del = (key) => {
     if (cache_object[key])

@@ -6,12 +6,13 @@ import BaseEntity from "@/models/common/BaseEntity";
 export default class Transcript extends BaseEntity{
 
     // @ForeignKey(() => User)
-    @Unique
-    @AllowNull
-    @Column(STRING(20))
-    public phone: string;
+    // @Unique
+    // @AllowNull
+    // @Column(STRING(20))
+    // public phone: string;
 
-    @AllowNull
+    // @Unique
+    @AllowNull(false)
     @Column({type: STRING, field: "study_num"})
     public studyNum: string;
 
@@ -24,14 +25,14 @@ export default class Transcript extends BaseEntity{
     @Column({type: DECIMAL(5, 1), field: "obtain_credit"})//获得学分
     public obtainCredit: number;
 
-    @Column({type: DECIMAL(5, 1), field: "elective_credit"})//选课学分
-    public electiveCredit: number;
+    // @Column({type: DECIMAL(5, 1), field: "elective_credit"})//选课学分
+    // public electiveCredit: number;
 
-    @Column(INTEGER)//排名
-    public rank: number;
+    // @Column(INTEGER)//排名
+    // public rank: number;
 
-    @Column({type: DECIMAL(8, 2), field: "relate_rank"})//相对排名
-    public relateRank: number;
+    // @Column({type: DECIMAL(8, 2), field: "relate_rank"})//相对排名
+    // public relateRank: number;
 
     @AllowNull
     @Column({type: STRING(30), field: "pro_rank"})//专业排名
@@ -41,9 +42,9 @@ export default class Transcript extends BaseEntity{
     @Column({type: STRING(30), field: "grade_rank"})//年级排名
     public gradeRank: string;
 
-    @AllowNull
-    @Column({type: INTEGER, field: "grade_student"})//年级人数
-    public gradeStudent: number;
+    // @AllowNull
+    // @Column({type: INTEGER, field: "grade_student"})//年级人数
+    // public gradeStudent: number;
 
     // @AllowNull
     // @Column({type: DECIMAL(2, 1), field: "minimum_course_credits"})//最少选课学分
