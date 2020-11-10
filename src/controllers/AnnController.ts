@@ -66,7 +66,6 @@ export default class AnnController {
     public static async exportScientificDirect(ctx: Context){
         const body = ctx.request.body;
         try {
-            console.log(body)
             const res = await addScientific(body);
             if (res)
                 ctx.rest(JSONResult.ok())
@@ -131,7 +130,6 @@ export default class AnnController {
     public static async exportCompetition(ctx: Context){
         const body = ctx.request.body;
         try {
-            console.log(body)
             const res = await addCompetition(body);
             if (res)
                 ctx.rest(JSONResult.ok())
@@ -185,7 +183,6 @@ export default class AnnController {
     public static async exportRecruit(ctx: Context){
         const body = ctx.request.body;
         try {
-            console.log(body)
             const res = await addRecruit(body);
             if (res)
                 ctx.rest(JSONResult.ok())

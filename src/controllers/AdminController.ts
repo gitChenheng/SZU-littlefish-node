@@ -25,7 +25,6 @@ export default class AdminController{
     public static async login(ctx: Context){
         try {
             const body = ctx.request.body;
-            console.log(body);
             if (!body.name || !body.pwd || (body.name !== "admin")){
                 ctx.rest(JSONResult.err("账号密码错误"));
                 return ;

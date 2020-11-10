@@ -147,9 +147,7 @@ export default class BaseDataController{
     public static async exportBaseParentStudent(ctx: Context){
         const body = ctx.request.body;
         try {
-            console.log(body)
             const psRes = await bulkCreatePS(body);
-            console.log("psRes", psRes)
             if (psRes)
                 ctx.rest(JSONResult.ok("导入成功"))
             else
@@ -174,7 +172,6 @@ export default class BaseDataController{
     @Post
     public static async exportTranscripts(ctx: Context){
         const body = ctx.request.body;
-        console.log(body)
         try {
             // const transcripts: any[] = [];
             // for (const o of body){
@@ -189,7 +186,6 @@ export default class BaseDataController{
             //     }
             // }
             const psRes = await addBulkTranscripts(body);
-            console.log("psRes", psRes)
             if (psRes)
                 ctx.rest(JSONResult.ok("导入成功"))
             else

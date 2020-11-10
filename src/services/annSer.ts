@@ -4,7 +4,7 @@ import {
     updateScientific, updateCompetition, deleteCompetition, updateRecruit, deleteRecruit, getScientificById, getCompetitionById
 } from "@/services/dao/annDao";
 import {ICompleteTogether, ICreateTogether} from "@/models/interface/ann";
-import {timeFormat} from "@/utils/util";
+import {decodeDate, timeFormat} from "@/utils/util";
 
 export const getScientificDirects = async () => {
     return await getAllScientific();

@@ -52,10 +52,16 @@ export const formatNumberToTwo = ( n: string | number) => {
 
 export const decodeDate = (date, hms) => {
     if (hms){
+        if (!date){
+            return ""
+        }
         return new Date(date).getFullYear() + "-" + (Number(new Date(date).getMonth()) + 1) + "-" + new Date(date).getDate() +
             `${hms && (" " + new Date(date).getHours() + ":" + formatNumberToTwo(new Date(date).getMinutes()) + ":" +
             formatNumberToTwo(new Date(date).getSeconds()))}`;
     }else{
+        if (!date){
+            return ""
+        }
         return new Date(date).getFullYear() + "-" + (Number(new Date(date).getMonth()) + 1) + "-" + new Date(date).getDate()
     }
 }
