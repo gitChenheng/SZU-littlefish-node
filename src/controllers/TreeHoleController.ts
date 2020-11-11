@@ -7,7 +7,7 @@ import {
     getMyTreeHoles,
     getTreeHoleComments
 } from "@/services/treeholeSer";
-import {getUid} from "@/services/userSer";
+import {getUid, getUserById} from "@/services/userSer";
 import {get_access_token, msg_sec_check} from "@/services/common/wx";
 import {RISKY_HINT} from "@/constans/code_status";
 
@@ -22,6 +22,7 @@ export default class TreeHoleController {
             if (res.length){
                 for (const it of res){
                     it.comments = await getTreeHoleComments(it.id);
+                    it.issuener = await getUserById(it.uid);
                 }
                 ctx.rest(JSONResult.ok(res));
             }else {

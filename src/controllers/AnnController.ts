@@ -6,7 +6,7 @@ import {
     removeScientificDirects, changeScientificDirectsById, removeCompetition, changeCompetitionById, removeRecruit, changeRecruitById, getCompetition,
 } from "@/services/annSer";
 import JSONResult from "@/utils/JSONResult";
-import {getUid} from "@/services/userSer";
+import {getUid, getUserById} from "@/services/userSer";
 import {get_access_token, msg_sec_check} from "@/services/common/wx";
 import {RISKY_HINT} from "@/constans/code_status";
 
@@ -198,7 +198,15 @@ export default class AnnController {
     public static async getTogether(ctx){
         try {
             const res = await getTogether();
-            ctx.rest(JSONResult.ok(res));
+            if (res.length){
+                for (const it of res){
+                    const userInfo = await getUserById(it.uid);
+                    it.submitter = userInfo.name;
+                }
+                ctx.rest(JSONResult.ok(res));
+            }else {
+                ctx.rest(JSONResult.ok(res));
+            }
         }catch (e) {
             throw e;
         }

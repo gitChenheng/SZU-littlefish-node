@@ -5,8 +5,9 @@ import {dbCtx} from "@/server/db/db_context";
 
 export const findTreeHoles = async (): Promise<TreeHole[]> => {
     return await TreeHole.findAll({
-        attributes: {exclude: [...CommonExcludeAttributes, "uid"]},
+        attributes: {exclude: [...CommonExcludeAttributes]},
         raw: true,
+        order: [["created_at", "DESC"]]
     })
 }
 
