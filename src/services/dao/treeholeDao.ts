@@ -2,13 +2,9 @@ import TreeHole from "@/models/entity/TreeHole";
 import TreeHoleComment from "@/models/entity/TreeHoleComment";
 import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
+import {timeFormat} from "@/utils/util";
 
 export const findTreeHoles = async (pageIndex: number, pageSize: number): Promise<any> => {
-    // return await TreeHole.findAll({
-    //     // attributes: {exclude: [...CommonExcludeAttributes]},
-    //     raw: true,
-    //     order: [["created_at", "DESC"]]
-    // })
     const db = dbCtx();
     const data = await db.query(
         `SELECT * FROM tree_hole WHERE deleted_at IS NULL ORDER BY created_at DESC LIMIT :pageIndex,:pageSize;`,
@@ -25,7 +21,13 @@ export const findTreeHoles = async (pageIndex: number, pageSize: number): Promis
     const count = await TreeHole.count({
         where: {},
     });
-    return {data, total: count}
+    return {
+        data: data.map((item: any) => ({
+            ...item,
+            created_at: timeFormat(item.created_at)
+        })),
+        total: count
+    }
 }
 
 export const findMyTreeHoles = async (uid: string): Promise<TreeHole[]> => {

@@ -7,12 +7,7 @@ import {
 import {timeFormat} from "@/utils/util";
 
 export const getAllTreeHoles = async (pageIndex = 1, pageSize = 10) => {
-    const res = await findTreeHoles(pageIndex, pageSize);
-    res.data.map((item: any) => ({
-        ...item,
-        created_at: timeFormat(item.created_at)
-    }))
-    return res;
+    return await findTreeHoles(pageIndex, pageSize);
 }
 
 export const getMyTreeHoles = async (uid: string) => {
