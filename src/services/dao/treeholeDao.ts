@@ -3,12 +3,29 @@ import TreeHoleComment from "@/models/entity/TreeHoleComment";
 import {CommonExcludeAttributes} from "@/constans/global";
 import {dbCtx} from "@/server/db/db_context";
 
-export const findTreeHoles = async (): Promise<TreeHole[]> => {
-    return await TreeHole.findAll({
-        // attributes: {exclude: [...CommonExcludeAttributes]},
-        raw: true,
-        order: [["created_at", "DESC"]]
-    })
+export const findTreeHoles = async (pageIndex: number, pageSize: number): Promise<any> => {
+    // return await TreeHole.findAll({
+    //     // attributes: {exclude: [...CommonExcludeAttributes]},
+    //     raw: true,
+    //     order: [["created_at", "DESC"]]
+    // })
+    const db = dbCtx();
+    const data = await db.query(
+        `SELECT * FROM tree_hole WHERE deleted_at IS NULL ORDER BY created_at DESC LIMIT :pageIndex,:pageSize;`,
+        {
+            type: db.QueryTypes.SELECT,
+            plain: false,
+            raw: true,
+            replacements: {
+                pageIndex: (Number(pageIndex) - 1) * pageSize,
+                pageSize
+            }
+        }
+    )
+    const count = await TreeHole.count({
+        where: {},
+    });
+    return {data, total: count}
 }
 
 export const findMyTreeHoles = async (uid: string): Promise<TreeHole[]> => {
@@ -36,7 +53,7 @@ export const findTreeHoleComments = async (treeHoleId: number): Promise<TreeHole
         INNER JOIN
         user u
         on t.tree_hole_id=:treeHoleId
-        AND t.uid=u.id
+        AND t.uid=u.id WHERE t.deleted_at IS NULL
         `,
         {
             type: db.QueryTypes.SELECT,
@@ -51,4 +68,10 @@ export const findTreeHoleComments = async (treeHoleId: number): Promise<TreeHole
 
 export const insertTreeHoleComment = async (item) => {
     return await TreeHoleComment.create(item);
+}
+
+export const deleteTreeHoleComment = async (id) => {
+    return await TreeHoleComment.destroy({
+        where: {id}
+    });
 }

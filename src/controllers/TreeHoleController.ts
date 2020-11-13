@@ -5,7 +5,7 @@ import {
     addMyTreeHole,
     addTreeHoleComment, getAllTreeHoles,
     getMyTreeHoles,
-    getTreeHoleComments
+    getTreeHoleComments, removeTreeHoleComment
 } from "@/services/treeholeSer";
 import {getUid, getUserById} from "@/services/userSer";
 import {get_access_token, msg_sec_check} from "@/services/common/wx";
@@ -15,18 +15,20 @@ import {RISKY_HINT} from "@/constans/code_status";
 export default class TreeHoleController {
 
     @Api
-    @Get
+    @Post
     public static async getAllTreeHoles(ctx: Context){
+        const {body} = ctx.request;
         try {
-            const res = await getAllTreeHoles();
+            const resWidthTotal = await getAllTreeHoles(body.pageIndex, body.pageSize);
+            const res = resWidthTotal.data;
             if (res.length){
                 for (const it of res){
                     it.comments = await getTreeHoleComments(it.id);
                     it.issuener = await getUserById(it.uid);
                 }
-                ctx.rest(JSONResult.ok(res));
+                ctx.rest(JSONResult.ok(resWidthTotal));
             }else {
-                ctx.rest(JSONResult.ok(res));
+                ctx.rest(JSONResult.ok(resWidthTotal));
             }
         }catch (e) {
             throw e;
@@ -111,6 +113,20 @@ export default class TreeHoleController {
                 ...body,
                 uid,
             });
+            if (res)
+                ctx.rest(JSONResult.ok());
+            else
+                ctx.rest(JSONResult.err());
+        }catch (e) {
+            throw e;
+        }
+    }
+    @Api
+    @Post
+    public static async removeTreeHoleComment(ctx: Context){
+        const body = ctx.request.body;
+        try {
+            const res = await removeTreeHoleComment(body.id);
             if (res)
                 ctx.rest(JSONResult.ok());
             else
